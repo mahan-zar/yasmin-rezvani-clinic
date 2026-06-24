@@ -83,9 +83,9 @@ export function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — absolutely positioned so it never affects header height */}
       <div
-        className={`mobile-menu mx-auto mt-2 max-w-6xl md:hidden ${
+        className={`mobile-menu md:hidden ${
           open ? 'is-open' : 'pointer-events-none'
         }`}
       >

@@ -267,11 +267,19 @@
   }
 
   /* ─── Mobile menu ────────────────────────────────────────────────────────────
-     Completely hidden (non-interactive, zero paint cost) by default.
-     `visibility: hidden` prevents the child backdrop-filter from bleeding
-     through on mobile even while opacity is 0.
-     The open state layers in a rich frosted-dark glass panel.               */
+     CRITICAL: must be position:absolute so it is removed from the header's
+     normal flow. When it was in-flow, `visibility:hidden` still let it occupy
+     ~250 px of invisible height inside the fixed header — creating a giant
+     transparent touch-blocker over the top half of the phone viewport.
+     Absolute positioning means the header height = nav height only, so
+     nothing below it is ever blocked.                                        */
   .mobile-menu {
+    position: absolute;
+    top: 100%;        /* flush with the bottom edge of the header */
+    left: 1rem;       /* match the header's px-4 */
+    right: 1rem;
+    margin-top: 0.5rem; /* the original mt-2 gap */
+
     opacity: 0;
     visibility: hidden;
     transform: translateY(-6px) scaleY(0.97);
