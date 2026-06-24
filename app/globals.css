@@ -1,0 +1,420 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-heading: var(--font-vazirmatn), 'Vazirmatn Fallback';
+  --font-sans: var(--font-vazirmatn), 'Vazirmatn Fallback';
+  --font-mono: var(--font-vazirmatn), 'Vazirmatn Fallback';
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+}
+
+:root {
+  color-scheme: dark;
+  --radius: 1rem;
+
+  --navy-deep: oklch(0.18 0.05 264);
+  --navy: oklch(0.24 0.06 264);
+  --gold: oklch(0.82 0.13 88);
+  --gold-soft: oklch(0.88 0.09 90);
+
+  --background: oklch(0.16 0.045 264);
+  --foreground: oklch(0.97 0.01 90);
+
+  --card: oklch(0.24 0.06 264);
+  --card-foreground: oklch(0.97 0.01 90);
+  --popover: oklch(0.2 0.05 264);
+  --popover-foreground: oklch(0.97 0.01 90);
+
+  --primary: oklch(0.82 0.13 88);
+  --primary-foreground: oklch(0.18 0.05 264);
+  --secondary: oklch(0.26 0.06 264);
+  --secondary-foreground: oklch(0.97 0.01 90);
+  --muted: oklch(0.26 0.05 264);
+  --muted-foreground: oklch(0.72 0.03 90);
+  --accent: oklch(0.82 0.13 88);
+  --accent-foreground: oklch(0.18 0.05 264);
+
+  --destructive: oklch(0.6 0.22 27);
+  --border: oklch(0.82 0.13 88 / 18%);
+  --input: oklch(0.97 0.01 90 / 12%);
+  --ring: oklch(0.82 0.13 88 / 50%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(
+        ellipse 80% 60% at 80% -10%,
+        oklch(0.82 0.13 88 / 0.14),
+        transparent
+      ),
+      radial-gradient(
+        ellipse 70% 50% at 0% 10%,
+        oklch(0.3 0.08 264 / 0.5),
+        transparent
+      );
+    background-attachment: fixed;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  ::selection {
+    background: var(--gold);
+    color: var(--navy-deep);
+  }
+}
+
+@layer components {
+  /* Luxury glassmorphism surface */
+  .glass {
+    background: linear-gradient(
+      135deg,
+      oklch(1 0 0 / 0.08),
+      oklch(1 0 0 / 0.02)
+    );
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid oklch(1 0 0 / 0.12);
+    box-shadow:
+      0 8px 32px oklch(0.12 0.04 264 / 0.5),
+      inset 0 1px 0 oklch(1 0 0 / 0.1);
+  }
+
+  .glass-gold {
+    background: linear-gradient(
+      135deg,
+      oklch(0.82 0.13 88 / 0.16),
+      oklch(0.82 0.13 88 / 0.04)
+    );
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid oklch(0.82 0.13 88 / 0.32);
+    box-shadow:
+      0 8px 32px oklch(0.12 0.04 264 / 0.5),
+      inset 0 1px 0 oklch(1 0 0 / 0.12);
+  }
+
+  /* Smooth lift + glow on hover for interactive glass elements */
+  .glass-interactive {
+    transition:
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.45s ease;
+    will-change: transform;
+  }
+  .glass-interactive:hover {
+    transform: translateY(-8px) scale(1.015);
+    border-color: oklch(0.82 0.13 88 / 0.55);
+    box-shadow:
+      0 24px 60px oklch(0.1 0.04 264 / 0.6),
+      0 0 0 1px oklch(0.82 0.13 88 / 0.25),
+      0 0 40px oklch(0.82 0.13 88 / 0.22),
+      inset 0 1px 0 oklch(1 0 0 / 0.16);
+  }
+
+  /* Shiny gold button with sheen sweep */
+  .btn-gold {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+      135deg,
+      oklch(0.88 0.1 92),
+      oklch(0.78 0.14 84)
+    );
+    color: var(--navy-deep);
+    transition:
+      transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.4s ease;
+    box-shadow: 0 6px 24px oklch(0.82 0.13 88 / 0.35);
+  }
+  .btn-gold:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow:
+      0 12px 36px oklch(0.82 0.13 88 / 0.5),
+      0 0 30px oklch(0.82 0.13 88 / 0.4);
+  }
+  .btn-gold::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-150%) skewX(-20deg);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(1 0 0 / 0.55),
+      transparent
+    );
+    transition: transform 0.8s ease;
+  }
+  .btn-gold:hover::after {
+    transform: translateX(150%) skewX(-20deg);
+  }
+
+  .form-input {
+    width: 100%;
+    border-radius: 0.75rem;
+    border: 1px solid oklch(1 0 0 / 0.12);
+    background: oklch(1 0 0 / 0.05);
+    padding: 0.75rem 1rem;
+    color: var(--foreground);
+    transition:
+      border-color 0.3s ease,
+      box-shadow 0.3s ease,
+      background 0.3s ease;
+  }
+  .form-input::placeholder {
+    color: oklch(0.72 0.03 90 / 0.7);
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: oklch(0.82 0.13 88 / 0.6);
+    background: oklch(1 0 0 / 0.08);
+    box-shadow: 0 0 0 3px oklch(0.82 0.13 88 / 0.15);
+  }
+  .form-input option {
+    background: var(--navy);
+    color: var(--foreground);
+  }
+
+  .gold-text {
+    background: linear-gradient(
+      120deg,
+      oklch(0.92 0.08 92),
+      oklch(0.78 0.14 84),
+      oklch(0.92 0.08 92)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* ─── Navbar glass transition ────────────────────────────────────────────────
+     Only animate the three properties that actually change when the .glass
+     class is toggled — avoids the compositor thrash of transition-all.       */
+  .nav-glass-transition {
+    transition:
+      background 0.5s ease,
+      border-color 0.5s ease,
+      box-shadow 0.5s ease;
+  }
+
+  /* ─── Hamburger icon cross-fade ──────────────────────────────────────────────
+     Both <Menu> and <X> icons live in the DOM permanently inside a shared
+     20×20 wrapper (.hamburger-wrap). Toggling between them uses only
+     opacity + transform (GPU compositor only — zero layout/paint work).      */
+  .hamburger-wrap {
+    position: relative;
+    display: block;
+    width: 1.25rem;   /* 20px = size-5 */
+    height: 1.25rem;
+  }
+  .hamburger-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+  }
+  .hamburger-icon--show {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  .hamburger-icon--hide {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(90deg) scale(0.7);
+  }
+
+  /* ─── Mobile menu ────────────────────────────────────────────────────────────
+     Completely hidden (non-interactive, zero paint cost) by default.
+     `visibility: hidden` prevents the child backdrop-filter from bleeding
+     through on mobile even while opacity is 0.
+     The open state layers in a rich frosted-dark glass panel.               */
+  .mobile-menu {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px) scaleY(0.97);
+    transform-origin: top center;
+    /* On close: animate opacity/transform first, then flip visibility off */
+    transition:
+      opacity    0.25s ease,
+      transform  0.3s  cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s    linear 0.3s;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+  }
+
+  /* Frosted-dark panel — override the generic .glass on the inner <ul>       */
+  .mobile-menu ul.glass {
+    background: oklch(0.13 0.045 264 / 0.88);
+    backdrop-filter: blur(10px) saturate(160%);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
+    border: 1px solid oklch(1 0 0 / 0.1);
+    box-shadow:
+      0 16px 48px oklch(0.1 0.04 264 / 0.75),
+      inset 0 1px 0 oklch(1 0 0 / 0.07);
+  }
+
+  .mobile-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scaleY(1);
+    /* On open: flip visibility on immediately, then animate in */
+    transition:
+      opacity    0.25s ease,
+      transform  0.3s  cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s    linear 0s;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition:
+      opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Persian (Solar Hijri) date picker theme */
+.rmdp-container {
+  display: block !important;
+  width: 100%;
+}
+.yasmin-datepicker.rmdp-wrapper,
+.rmdp-wrapper {
+  background: var(--navy) !important;
+  border: 1px solid oklch(0.82 0.13 88 / 0.32) !important;
+  border-radius: 1rem !important;
+  box-shadow: 0 20px 50px oklch(0.1 0.04 264 / 0.6) !important;
+  font-family: var(--font-vazirmatn), sans-serif !important;
+  transform-origin: top center;
+  animation: rmdp-pop 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+@keyframes rmdp-pop {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -6px, 0) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+.rmdp-calendar {
+  padding: 0.5rem !important;
+}
+.rmdp-header,
+.rmdp-week-day,
+.rmdp-day span,
+.rmdp-header-values {
+  color: var(--foreground) !important;
+}
+.rmdp-week-day {
+  color: var(--gold) !important;
+}
+.rmdp-arrow {
+  border-color: var(--gold) !important;
+}
+
+/* ─── Calendar arrow smooth hover (GPU-only) ─────────────────────────────── */
+.rmdp-arrow-container {
+  transition: background 0.18s ease !important;
+  border-radius: 50% !important;
+}
+.rmdp-arrow-container:hover {
+  background: oklch(0.82 0.13 88 / 0.18) !important;
+  box-shadow: none !important;
+}
+
+/* ─── Calendar day-cell smooth hover/select (GPU-only: transform + bg) ────── */
+.rmdp-day span {
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease !important;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+.rmdp-day:not(.rmdp-disabled):not(.rmdp-day-hidden) span:hover {
+  background: oklch(0.82 0.13 88 / 0.2) !important;
+  color: var(--foreground) !important;
+}
+.rmdp-wrapper .rmdp-day.rmdp-selected span:not(.highlight),
+.rmdp-wrapper .rmdp-day.rmdp-today.rmdp-selected span {
+  background: var(--gold) !important;
+  color: var(--navy-deep) !important;
+  box-shadow: 0 4px 14px oklch(0.82 0.13 88 / 0.4) !important;
+}
+.rmdp-wrapper .rmdp-day.rmdp-today:not(.rmdp-selected) span {
+  background: oklch(0.82 0.13 88 / 0.25) !important;
+  color: var(--foreground) !important;
+}
+.rmdp-day.rmdp-deactive span,
+.rmdp-day.rmdp-disabled span {
+  color: oklch(0.72 0.03 90 / 0.4) !important;
+}
+.rmdp-panel-body,
+.rmdp-ym .rmdp-day span {
+  color: var(--foreground) !important;
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+.animate-float {
+  animation: float-slow 7s ease-in-out infinite;
+}
